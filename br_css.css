@@ -58,6 +58,19 @@ a:active {
   padding-top: 5px;
 }
 
+#content img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  text-align: justify;
+  padding-right: 40px;
+}
+
+ul::after {width: 65%; display: inline-block; content: "."; visibility: hidden}
+
 .buttons li {
   display: inline-block;
   background-color: rgba(60,60, 61, .6);
