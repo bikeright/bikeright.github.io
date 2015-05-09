@@ -6,6 +6,8 @@
       @import url(http://fonts.googleapis.com/css?family=Lobster);
     </style>
   <link rel="stylesheet" type="text/css" href="br_css.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 </head>
 <body>
 <div id="page_wrapper">
@@ -27,8 +29,9 @@
         <li><a href="map-of-wanted-bike-racks.html" target="_self">Request a Bike Rack</a></li>
       </ul>
     </div>
-        <div id="content"><img src="tricycle.jpg" width="95%"></div>
-        </div>
+    <div id="content">
+      <div id="map"></div>
+    </div>
   <div id="footer">
       <ul class="buttons">
         <li><a href="manage-account.html" target="_self">Manage Account</a></li>
@@ -42,5 +45,31 @@
       </ul>
   </div>
 </div>
+<script>
+  // create the base tile layer with correct attribution
+  var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+  var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 16, attribution: osmAttrib});
+
+  // create a layer for stolen bike markers
+  var stolenBike1 = L.marker([29.93, -90.07]).bindPopup('Someone stole my bike here!');
+  var stolenBike2 = L.marker([29.95, -90.07]).bindPopup('I saw someone steal a bike off a tree here.');
+  var stolenBikes = L.layerGroup([stolenBike1, stolenBike2]);
+
+  // create a layer for secure bike racks
+  var rack1 = L.marker([29.93, -90.09]);
+  var rack2 = L.marker([29.95, -90.09]);
+  var bikeRacks = L.layerGroup([rack1, rack2]);
+
+  // create the leaflet map centered on nola
+  var map = L.map('map', {
+    center: [29.95, -90.07],
+    zoom: 13,
+    layers: [osm, stolenBikes, bikeRacks]
+  });
+
+  // add a layer control to show different layers
+  L.control.layers({'osm': osm}, {'Stolen Bikes': stolenBikes, 'Secure Bike Racks': bikeRacks}).addTo(map);
+</script>
 </body>
 </html>
