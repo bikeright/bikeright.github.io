@@ -82,3 +82,8 @@ ul::after {width: 65%; display: inline-block; content: "."; visibility: hidden}
 .buttons a {
   color: white;
 }
+
+#map {
+  height: 400px;
+  width: 100%;
+}
